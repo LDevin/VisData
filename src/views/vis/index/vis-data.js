@@ -43,7 +43,7 @@ var fetchAjax = ()=> {
         post('/oauth/token', data, 2).then(data => {
             console.log('data ', data);
             
-            let action = bindActions.changeUserName(data.data.token.access_token);
+            let action = bindActions.changeUserName(data.body.data.token.access_token);
             dispatch(action);
         })
     }

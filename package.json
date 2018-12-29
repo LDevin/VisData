@@ -5,10 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "mockdev": "nodemon ./mock/server.js",
+    "mk": "concurrently --kill-others-on-fail \"npm run mock\" \"npm run mockdev\"",
+    "mock": "nodemon ./mock/server.js",
     "start": "npm run dev",
     "build": "npm run prod",
     "dev": "cross-env NODE_ENV=dev webpack-dev-server --colors --progress --inline --hot --display-error-details",
+    "mockdev": "cross-env NODE_ENV=dev MOCK_ENV=mock webpack-dev-server --colors --progress --inline --hot --display-error-details",
     "prod": "cross-env NODE_ENV=prod webpack --progress --colors --bail",
     "profile": "cross-env NODE_ENV=prod webpack --colors --profile --display-modules"
   },
@@ -40,6 +42,7 @@
     "babel-preset-react-hmre": "^1.1.1",
     "babel-preset-stage-2": "^6.24.1",
     "clean-webpack-plugin": "^1.0.0",
+    "concurrently": "^4.1.0",
     "cross-env": "^5.2.0",
     "css-loader": "^2.0.1",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",

@@ -1,4 +1,6 @@
 const {create, defaults, rewriter, router, bodyParser} = require('json-server');
+const config = require('./config');
+
 const routes = require('./routes.json');
 const db = router(require('./mock-merge')());
 
@@ -18,7 +20,7 @@ server.use(db);
 
 db.render = require('./renders').normal;
 
-const PORT = process.env.MOCK_PORT | 9000;
+const PORT = process.env.MOCK_PORT | config.port;
 
 server.listen(PORT, () => {
     console.log('json-server is running!')
