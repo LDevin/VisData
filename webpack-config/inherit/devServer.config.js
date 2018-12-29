@@ -32,7 +32,7 @@ module.exports = {
     devServer: {
         inline: true,
         hot: true,
-        host: '172.16.1.32',
+        host: 'localhost',
         port: 8088,
         compress: true,
         contentBase: require('../var/dir-vars.config').buildDir,
