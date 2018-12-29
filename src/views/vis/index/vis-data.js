@@ -15,8 +15,6 @@ import bindActions from 'bindActions';
 import Store from 'store';
 import Devin from './data.json';
 
-//var Devin = require('./data.json');
-
 const mapStateToProps = state => {
     return {userName: state.user.name}
 }
