@@ -5,6 +5,8 @@ import ReactMapGL, {NavigationControl,StaticMap} from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '../../../../public/resources/css/map.css';
 
+import {ScreenSaver} from '../utils/mouse-key-event';
+
 import MapStyle from 'mapStyle';
 import BuildLayer from 'buildLayer';
 
@@ -12,13 +14,13 @@ const bearingSet = {min: -30, init: 0, max: 30};
 const pitchSet = {min: 50, max: 60};
 const zoomSet = {min: 8.0, max: 20, maxTrans: 15, anit: 1.0, initZoom: 12.655823249249143};
 // const lngLatSet = {initLng: 116.398779, initLat: 39.912113};
-const lngLatSet = {initLng: 108.31390857696533, initLat: 22.817050141479882};
+const lngLatSet = {initLng: 108.31390857696570, initLat: 22.837050141589999};
 const lightPositonSet = {lngOffset: 0.06, latOffset: 0.1, 
-  minLng: 108.20915222167967, minLat: 22.806250618559172,
-  maxLng: 108.40862274169922, maxLat: 22.850550902385194};
+  minLng: 107.00515222167967, minLat: 22.806250618559172,
+  maxLng: 108.48862274169922, maxLat: 22.990550902385194};
 
-const lightLngOffset = (lightPositonSet.maxLng - lightPositonSet.minLng) / 100;
-const lightLatOffset = (lightPositonSet.maxLat - lightPositonSet.minLat) / 100;
+const lightLngOffset = (lightPositonSet.maxLng - lightPositonSet.minLng) / 1000;
+const lightLatOffset = (lightPositonSet.maxLat - lightPositonSet.minLat) / 1000;
 
 // const LIGHT_SETTINGS = {
 //   lightsPosition: [lngLatSet.initLng, lngLatSet.initLat, 9000, 
@@ -30,13 +32,14 @@ const lightLatOffset = (lightPositonSet.maxLat - lightPositonSet.minLat) / 100;
 //   numberOfLights: 2
 // };
 
+const __LIGHT_SET = {init: 0.0, max: 5000.0, _init: 5.0, _max: 20.0}
 const LIGHT_SETTINGS = {
-  lightsPosition: [lngLatSet.initLng, lngLatSet.initLat, 1000],
+  lightsPosition: [lngLatSet.initLng , lngLatSet.initLat , 100,lngLatSet.initLng , lngLatSet.initLat , 8000],
   ambientRatio: 0.05,
-  diffuseRatio: 0.5,
-  specularRatio: 0.7,
-  lightsStrength: [8.0, 8.0, 8.0, 8.0 /****, 2.0, 0.1, 0.1, 0.1*****/],
-  numberOfLights: 1
+  diffuseRatio: 0.1,
+  specularRatio: 0.5,
+  lightsStrength: [15.0, 5000.0, 10.0, 0.0],
+  numberOfLights: 1,
 };
 
 const INITIAL_VIEW_STATE = {
@@ -51,6 +54,9 @@ const INITIAL_VIEW_STATE = {
   bearing: bearingSet.init
 };
 
+let _JUDEGE_ = false;
+let _judge_index = 0;
+
 export default class App extends Component {
 
     constructor() {
@@ -59,6 +65,8 @@ export default class App extends Component {
           buildData: BuildLayer,
           viewState: {...INITIAL_VIEW_STATE},
           count: 2,
+          scale: 1,
+          light: {...LIGHT_SETTINGS}
       }
     //   this.state = {
     //     time: 0,
@@ -73,16 +81,16 @@ export default class App extends Component {
        this._onViewStateChange = this._onViewStateChange.bind(this);
     //   this._onHover = this._onHover.bind(this);
     //   this._renderTooltip = this._renderTooltip.bind(this);
-    //   this._animateViewState = this._animateViewState.bind(this);
+       this._animateViewState = this._animateViewState.bind(this);
   
     //   this.bearingOverFlow = false;
     //   this.pitchOverFlow = false;
-    //   this.lightPosUpMaxOverFlow = false;
+       this.lightPosUpMaxOverFlow = false;
     //   this.zoomTransCount = 0;
     //   this.zoomDesOffset = 0;
   
-    //   this.lightSet = LIGHT_SETTINGS;
-    //   this.buildOpacity = 0.7;
+      this.lightSet = {...LIGHT_SETTINGS};
+      this.buildOpacity = 0.7;
     //   this.pathColor = [37, 183, 144, 150];
   
     //   this.pathColorOverFlow = false;
@@ -94,67 +102,88 @@ export default class App extends Component {
   
     componentDidMount() {
         this.setState({count: 3});
+        let self = this;
+  
+        self.intervalViewTimer = window.setInterval(self._animateViewState, 20);
      // this.props.onRef(this);
      // this._animate();
-      // this._changeAnimationViewState();
+      //this._changeAnimationViewState();
       //this._startAnimatePathTimer();
       //boudaryDara: LgJiedaoBoundary, lgJiedaoData: LgJiedaoName
      // this.setState({...this.state, tripData: LonggangRoadJson, buildData: BuildJson,boudaryDara: LgJiedaoBoundary, lgJiedaoData: LgJiedaoName});
     }
   
     _changeAnimationViewState() {
-    //   let self = this;
-    //   var saver = new ScreenSaver({timeout : 600000}, function(timeouted) {
-    //     if (timeouted) {
-    //       self.lightPosUpMaxOverFlow = false;
+      let self = this;
+      var saver = new ScreenSaver({timeout: 5000}, function(timeouted) {
+        if (timeouted) {
+         self.lightPosUpMaxOverFlow = false;
   
-    //       let {lightsPosition} = self.lightSet;
-    //       lightsPosition[0] = lightPositonSet.minLng;
-    //       lightsPosition[1] = lightPositonSet.minLat;
-    //      // lightsPosition[3] = lightPositonSet.minLng + lightPositonSet.lngOffset;
-    //      // lightsPosition[4] = lightPositonSet.minLat + lightPositonSet.latOffset;
+         
+        let {lightsPosition} = self.lightSet;
+        lightsPosition[0] = lightPositonSet.minLng;
+        lightsPosition[1] = lightPositonSet.minLat;
+
+          // lightsPosition[2] = __LIGHT_SET.init;
+          // lightsStrength[0] = __LIGHT_SET._init;
+
+          //lightsPosition[1] = lightPositonSet.minLat;
+         // lightsPosition[3] = lightPositonSet.minLng + lightPositonSet.lngOffset;
+         // lightsPosition[4] = lightPositonSet.minLat + lightPositonSet.latOffset;
   
-    //       self.intervalViewTimer = window.setInterval(self._animateViewState, 20);
-    //     } else {
-    //       self.zoomDesOffset = 0;
-    //       self.zoomTransCount = 0;
-    //       this.lightSetOffset = 0;
+          self.intervalViewTimer = window.setInterval(self._animateViewState, 20);
+        } else {
+         // self.zoomDesOffset = 0;
+         // self.zoomTransCount = 0;
+          this.lightSetOffset = 0;
   
-    //       if (self.intervalViewTimer != null) {
-    //           window.clearInterval(self.intervalViewTimer)
-    //       }
-    //     }
-    //   });
+          if (self.intervalViewTimer != null) {
+              window.clearInterval(self.intervalViewTimer)
+          }
+        }
+      });
     }
   
-    // _animateViewState() {
-    //   let bearing = 0, pitch = pitchSet.max, zoom = zoomSet.min,
-    //   bearingOffset = 0.06, pitchOffset = 0.02, 
-    //   zoomOffset = 0.004; //zoomOffset为偶数 1/zoomOffset为整数
+    _animateViewState() {
+      let bearing = 0, pitch = pitchSet.max, zoom = zoomSet.min,
+      bearingOffset = 0.06, pitchOffset = 0.02, 
+      zoomOffset = 0.004; //zoomOffset为偶数 1/zoomOffset为整数
   
-    //   let {lightsPosition} = this.lightSet;
-    //   let lng = lightsPosition[0], lat = lightsPosition[1];
+   
+      let {lightsPosition} = this.lightSet;
+      let lng = lightsPosition[0], lat = lightsPosition[1];
       
-    //   if (this.lightPosUpMaxOverFlow) {
-    //     if (lng <= lightPositonSet.minLng || lat <= lightPositonSet.minLat) {
-    //       this.lightPosUpMaxOverFlow = false;
-    //       lng += lightLngOffset;
-    //       lat += lightLatOffset;
-    //     } else {
-    //       lng -= lightLngOffset;
-    //       lat -= lightLatOffset;
-    //     }
-    //   } else {
-    //     if (lng >= lightPositonSet.maxLng || lat >= lightPositonSet.maxLat) {
-    //       this.lightPosUpMaxOverFlow = true;
-    //     } else {
-    //       lng += lightLngOffset;
-    //       lat += lightLatOffset;
-    //     }
-    //   }
+      if (this.lightPosUpMaxOverFlow) {
+        if (lng <= lightPositonSet.minLng || lat <= lightPositonSet.minLat) {
+          this.lightPosUpMaxOverFlow = false;
+          lng += lightLngOffset;
+          lat += lightLatOffset;
+        } else {
+          lng -= lightLngOffset;
+          lat -= lightLatOffset;
+        }
+      } else {
+        if (lng >= lightPositonSet.maxLng || lat >= lightPositonSet.maxLat) {
+          this.lightPosUpMaxOverFlow = true;
+        } else {
+          lng += lightLngOffset;
+          lat += lightLatOffset;
+        }
+      }
   
-    //   lightsPosition[0] = lng;
-    //   lightsPosition[1] = lat;
+      lightsPosition[0] = lng;
+      lightsPosition[1] = lat;
+
+     // lightsPosition[2] = lngZ;
+      //lightsStrength[0] = lightS;
+
+      //this.lightSet.lightsPosition[2] = lngZ;
+      //this.lightSet.lightsStrength[0] = lightS;
+
+      // this.buildOpacity++;
+      // if (this.buildOpacity >= 1.0) {
+      //   this.buildOpacity = 0.1;
+      // }
     //   //lightsPosition[3] = lng + lightPositonSet.lngOffset;
     //   //lightsPosition[4] = lat + lightPositonSet.latOffset;
   
@@ -211,17 +240,28 @@ export default class App extends Component {
     //       zoom = this.state.viewState.zoom + zoomOffset;
     //     }
     //   }
-    //   let newViewState = Object.assign({}, this.state.viewState, {bearing: bearing, pitch: pitch, zoom: zoom})
-    //   this.setState({viewState: newViewState})
-    // }
+        // let newViewState = Object.assign({}, this.state.viewState)
+        console.log('this.lightSet ',this.lightSet)
+         this.setState({light: {...this.lightSet, lightsPosition: [...this.lightSet.lightsPosition], 
+          lightsStrength: [...this.lightSet.lightsStrength]}})
+        // _judge_index++;
+        // if (_judge_index > 300) {
+        //   _judge_index = 0;
+        //   _JUDEGE_ = !_JUDEGE_;
+        //   this.setState({scale: 5})
+        //   console.log('_Jude ',_JUDEGE_)
+        // } else {
+        //   this.setState({scale: 1})
+        // }
+    }
   
     componentWillUnmount() {
     //   if (this._animationFrame) {
     //       window.cancelAnimationFrame(this._animationFrame);
     //   }
-    //   if (this.intervalViewTimer != null) {
-    //       window.clearInterval(this.intervalViewTimer)
-    //   }
+      if (this.intervalViewTimer != null) {
+          window.clearInterval(this.intervalViewTimer)
+      }
     }
   
     // _animate() {
@@ -325,10 +365,10 @@ export default class App extends Component {
       this.setState({viewState});
       console.log('view state ',viewState);
       //this.setState({count: 10})
-      //const lng = viewState.longitude, lat = viewState.latitude;
-    //   let {lightsPosition} = this.lightSet;
-    //   lightsPosition[0] = lng;
-    //   lightsPosition[1] = lat;
+      // const lng = viewState.longitude, lat = viewState.latitude;
+      // let {lightsPosition} = this.lightSet;
+      // lightsPosition[0] = lng;
+      // lightsPosition[1] = lat;
     //  // lightsPosition[3] = lng + lightPositonSet.lngOffset;
     //  // lightsPosition[4] = lat + lightPositonSet.latOffset;
   
@@ -414,17 +454,16 @@ export default class App extends Component {
           extruded: true,
           wireframe: false,
           fp64: true,
-          opacity: 0.7,// this.buildOpacity,
+          opacity: 0.5,
           elevationScale: 1,
           getPolygon: f => f.polygon,
           getElevation: f => f.height,
           getFillColor: [74, 80, 87],
-         // lightSettings: this.lightSet,
-        //   updateTriggers: {
-        //     lightSettings: [this.lightSet],
-        //     opacity: [this.buildOpacity]
-        //   },
-          getPolygonOffset: ({layerIndex}) => [0, layerIndex * 101],
+          lightSettings:this.state.light,// LIGHT_SETTINGS
+          // updateTriggers: {
+          //  lightSettings: [this.lightSet],
+          // // elevationScale: [_JUDEGE_]
+          // },
         }),
 
       ];
@@ -433,16 +472,16 @@ export default class App extends Component {
     render() {
      // const {mapDataLoading, mapDataErrCon, mapDataErrConShow} = this.props.cacheData;
       const {viewState} = this.state;
-//onViewStateChange={this._onViewStateChange}
-
+    //onViewStateChange={this._onViewStateChange}
 
       return (
           <div className="map-container" id="map">
             <DeckGL
                 layers={this._renderLayers()}
                 initialViewState={INITIAL_VIEW_STATE}
-                viewState={viewState}
+
                 controller={true}
+                viewState={viewState}
                 onViewStateChange={this._onViewStateChange}
                 
                 >

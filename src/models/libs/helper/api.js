@@ -27,7 +27,7 @@ function login(data) {
      .then(res => {
 
          if (res.code === _CONST.ERROR.SUCCESS) {
-            UTIL.setToken(res.data.token.access_token);
+            UTIL.setToken(res.body.data.token.access_token);
          } 
          return Promise.resolve({code: res.code, msg: res.msg})
      })
