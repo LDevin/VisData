@@ -16,7 +16,7 @@ const proDev = {
 }
 
 const proMock = {
-    '/api/v1/bigData/*': { 
+    '/api/v1/*': { 
         target: 'http://localhost:9000',
         secure: false, // 接受 运行在 https 上的服务
         changeOrigin: true

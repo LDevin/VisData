@@ -4,5 +4,7 @@ const fk = {
 }
 module.exports = {
     port: 9000,
-    mockdir:`../${fk.faker}/test`
+    jsondir:`../${fk.json}/test`,
+    fakerdir: `../${fk.faker}/test`,
+    debug: false,
 }

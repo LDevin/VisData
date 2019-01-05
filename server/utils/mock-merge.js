@@ -1,8 +1,6 @@
 const fs = require('fs')
 const path = require('path')
 
-const MOCK_DIR = path.resolve(__dirname, require('./config').mockdir);
-
 const merge = dir => {
     let res = [];
     let list = fs.readdirSync(dir);
@@ -19,20 +17,22 @@ const merge = dir => {
     return res;
 }
 
-let db = {}
-merge(MOCK_DIR).forEach(file => {
-    const res = require(file);
-    if (!Array.isArray(res)) {
-        Object.assign(db, res)
-    } else {
-        if (db.data == null) {
-            db.data = []
-        }
-        res.forEach( item => db.data.push(item))
-    }
-})
+module.exports = (dir) => {
+    const MOCK_DIR = path.resolve(__dirname, dir);
 
-console.log(' merge db ', JSON.stringify(db));
-module.exports = () => {
-    return db;
+    let db = {}
+    merge(MOCK_DIR).forEach(file => {
+        const res = require(file);
+        if (!Array.isArray(res)) {
+            Object.assign(db, res)
+        } else {
+            if (db['data'] == null) {
+                db['data'] = []
+            }
+            res.forEach( item => db.data.push(item))
+        }
+    })
+
+    require('./config').debug ? console.log(' merge db ', JSON.stringify(db)) : '';
+    return db
 }

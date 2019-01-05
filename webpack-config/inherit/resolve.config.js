@@ -13,6 +13,7 @@ module.exports = {
             utils: path.resolve(process.cwd(), './src/models/utils/util'),
             consts: path.resolve(process.cwd(), './src/models/utils/const'),
             bindActions: path.resolve(process.cwd(), './src/models/actions/bind-actions'),
+            models: path.resolve(process.cwd(), './src/models/models'),
             mapStyle: path.resolve(process.cwd(), './src/public/resources/data/map_local_style'),
             buildLayer: path.resolve(process.cwd(), './src/public/resources/data/longgang_build'),
 

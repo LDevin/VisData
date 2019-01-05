@@ -8,12 +8,13 @@ import '../../../public/resources/css/shop.css';
 import Section from './page/sections';
 import MapContainer from './map/index';
 
-import {request, post, login} from 'helper';
+import {request, post, get, login} from 'helper';
 import UTIL from 'utils';
 import bindActions from 'bindActions';
 
 import Store from 'store';
-import Devin from './data.json';
+
+import {fetchDangers, testPost} from 'models';
 
 const mapStateToProps = state => {
     return {userName: state.user.name}
@@ -47,24 +48,24 @@ var fetchAjax = ()=> {
     }
 }
 
-class Index extends React.Component {
+class App extends React.Component {
 
     constructor() {
         super();
     }
 
     componentDidMount() {
-        var data = {userName: 'nnadmin', password: '888888', clientId: 'client'};
+         var data = {userName: 'nnadmin', password: '888888', clientId: 'client'};
 
-        const action = fetchAjax();
+         const action = fetchDangers();
+         const testAction = testPost('')
 
-        Store.dispatch(action)
-        //console.log('version ', Congif.version);
-
+         Store.dispatch(action)
+         Store.dispatch(testAction)
         login(data).then(err => {
             console.log('err ', err);
             console.log('access_token ', UTIL.getToken());
-        });
+        });   
     }
     
     componentDidUpdate() {
@@ -72,30 +73,13 @@ class Index extends React.Component {
     }
 
     render() {
-
-        // <div className='top'>这是头部</div>
-        // <div className='test_section'>
-        //     <a href='/index/index'>首页</a>
-        //     <a href='javascript:void();'>商城</a>
-        // </div>
-        // <div>{this.props.userName}</div>
-        // <div className='shop-content'>
-        //     <img src={require('../../../public/resources/images/img_map_longgang.png')}/>
-        // </div>
-        // <div className='bottom'>这是底部</div>
-
-        // <div className='bottom' onClick={()=>this.props.onClick(1)}>点击</div>
-        // <div className='bottom' onClick={()=>this.props.onClick(2)}>点击2</div>
-
-        // <Section />
-
+//
         return(
             <div>
-
                 <MapContainer />
             </div>
         )
     }
 }
 
-export default connect(mapStateToProps, mapDispathToProps)(Index);
+export default connect(mapStateToProps, mapDispathToProps)(App);

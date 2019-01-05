@@ -73,8 +73,8 @@ function request(options={}) {
 
 function get(url) {
     return request({
-        method: 'GET',
-        mode: 'cors',
+        method: 'get',
+        mode: 'cros',
         url: url,
     })
 }

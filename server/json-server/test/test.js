@@ -8,5 +8,9 @@ module.exports = {
                 hehe: 'dddd'
             }
         ]
+    },
+    dangers:{
+        id: 'fdff',
+        age: 18
     }
 }

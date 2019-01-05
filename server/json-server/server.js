@@ -2,7 +2,7 @@ const {create, defaults, rewriter, router, bodyParser} = require('json-server');
 const config = require('../utils/config');
 
 const routes = require('./routes.json');
-const db = router(require('../utils/mock-merge')());
+const db = router(require('../utils/mock-merge')(config.jsondir));
 
 const server = create();
 const middles = defaults({bodyParser: true});

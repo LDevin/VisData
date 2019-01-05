@@ -19,3 +19,6 @@ export function changeCom(user) {
         payload: user,
     }
 }
+export function changeMap(actions) {
+    return {...actions}
+}

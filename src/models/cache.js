@@ -6,7 +6,7 @@ const month_now = moment().format(month_format);
 const date_now = moment().format(date_format);
 
 const _User = {
-    name: '',
+    name: 'devin',
     ps: '',
 };
 
@@ -22,6 +22,7 @@ const _Com = {
 };
 
 const _Map = {
+    hexs:null,
     ZoneLngLatData: null,
     gridZoneWarnData:null,
     ScatterplotData: null,
