@@ -116,3 +116,19 @@ export const fetchUnits = () => {
     })
 }
 
+export const fetchDevices = () => {
+    return _Get(_CONST.API.FETCH_DEVICES, (dispatch, result) => {
+        _CONST.DEBUG ? console.log('FETCH_DEVICES success'):''
+        let res = [];
+        if (Array.isArray(result)) {
+            result.forEach( item => {
+                let cor = item.coordinates.split(':')
+                res.push({coordinates: [Number(cor[0]), Number(cor[1])]})
+            }) 
+        }
+        let action = bindActions.changeMap({type: _CONST.ACTION.CH_GRIDS, payload: res});
+        dispatch(action)
+        console.log('store ', Store.getState().map)
+    })
+}
+

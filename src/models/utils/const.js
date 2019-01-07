@@ -8,6 +8,7 @@ const CONST = {
         FETCH_STREETS: '/api/v1/streetlabel',
         FETCH_CHECKS: '/api/v1/checks',
         FETCH_UNITS: '/api/v1/units',
+        FETCH_DEVICES: '/api/v1/devices'
 
     },
     KEY: {
@@ -32,6 +33,7 @@ const CONST = {
         CH_TEXTS:'CH_TEXTS',
         CH_POINTCLOUD:'CH_POINTCLOUD',
         CH_ICONS:'CH_ICONS',
+        CH_GRIDS: 'CH_GRIDS',
     }
 }
 

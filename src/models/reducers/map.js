@@ -10,6 +10,8 @@ export function map(state=_Map, action) {
         return {...state, pointClouds: action.payload}
         case 'CH_ICONS':
         return {...state, icons: action.payload}
+        case 'CH_GRIDS':
+        return {...state, grids: action.payload}
         default:
         return state;
     }

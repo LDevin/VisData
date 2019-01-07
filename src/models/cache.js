@@ -23,6 +23,7 @@ const _Com = {
 
 const _Map = {
     hexs:null,
+    grids:null,
     texts:null,
     icons:null,
     characterSet:[],

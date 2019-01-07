@@ -142,5 +142,24 @@ module.exports = [
           }
         ]
       }
+    },
+    {
+      path: '/api/v1/devices',
+      method: 'get',
+      delay: 10,
+      status: 200,
+      data: {
+        code: 200,
+        msg: '获取数据成功',
+        'data|5000': [
+          {
+            coordinates: function() {
+              let random = Math.random()
+              let random2 = Math.random()
+              return (lng.min + lng_offset*random) + ":" + (lat.min + lat_offset*random2)
+            }
+          }
+        ]
+      }
     }
   ]

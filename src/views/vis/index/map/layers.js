@@ -1,4 +1,6 @@
-import DeckGL, {PolygonLayer, ScatterplotLayer, PointCloudLayer, HexagonLayer,IconLayer,TextLayer, FlyToInterpolator, PathLayer,COORDINATE_SYSTEM} from 'deck.gl';
+import DeckGL, {PolygonLayer, ScatterplotLayer, PointCloudLayer, HexagonLayer,GridLayer,
+    IconLayer,TextLayer, FlyToInterpolator, PathLayer,COORDINATE_SYSTEM} from 'deck.gl';
+
 import {TripsLayer} from '@deck.gl/experimental-layers';
 import PathLayerData from '../../../../public/resources/data/road_path.json';
 import RoadTripData from '../../../../public/resources/data/road_lg1.json';
@@ -31,6 +33,15 @@ const HexLayColorRange = [
   [254, 237, 177],
   [254, 173, 84],
   [209, 55, 78]
+];
+
+const GridColorRange = [
+    [55, 255, 20],
+    [65, 240, 25],
+    [70, 220, 30],
+    [80, 210, 35],
+    [90, 190, 55],
+    [150, 170, 66]
 ];
 
 export default function layers() {
@@ -82,6 +93,18 @@ export default function layers() {
             getAngle: -20,
             characterSet:['青', '区', '秀', '武', '宁', '横', '县','街','道'],
             getSize: Math.pow(1.5, this.state.viewState.zoom - 5),
+        }),
+        new GridLayer({
+            id: 'grid-layer_1',
+            data: this.props.map.grids,
+            pickable: true,
+            extruded: true,
+            colorRange: GridColorRange,
+            coverage: 0.5,
+            cellSize: 100,
+            elevationScale: 2,
+            autoHighlight:true,
+            getPosition: d => d.coordinates,
         }),
         new HexagonLayer({
               id: 'hexagon-layer_1',

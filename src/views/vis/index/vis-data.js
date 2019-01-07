@@ -14,7 +14,7 @@ import bindActions from 'bindActions';
 
 import Store from 'store';
 
-import {fetchDangers, testPost,fetchStreetLabel,fetchChecks,fetchUnits} from 'models';
+import {fetchDangers, testPost,fetchStreetLabel,fetchChecks,fetchUnits,fetchDevices} from 'models';
 
 const mapStateToProps = state => {
     return {userName: state.user.name}
@@ -62,12 +62,14 @@ class App extends React.Component {
          const fetchStreet = fetchStreetLabel();
          const fetchCh = fetchChecks();
          const fetchUns = fetchUnits();
+        const fetchDevice = fetchDevices();
 
          Store.dispatch(action)
          Store.dispatch(testAction)
          Store.dispatch(fetchStreet)
          Store.dispatch(fetchCh)
          Store.dispatch(fetchUns)
+         Store.dispatch(fetchDevice);
 
         login(data).then(err => {
             console.log('err ', err);
