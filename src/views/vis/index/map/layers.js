@@ -81,11 +81,11 @@ export default function layers() {
               data: this.props.map.hexs,
               colorRange: HexLayColorRange,
               coverage: 0.2,
-              upperPercentile: 98,
+              upperPercentile: 100,
               pickable: true,
               extruded: true,
               radius: 100,
-              elevationScale: 2,
+              elevationScale: 1,
               getPosition: d => d.coordinates,//[x,y,z]
               onHover: ({object, coordinate})=> console.log('hex layer ', coordinate),
               lightSettings:LIGHT_SETTINGSss,
@@ -95,7 +95,7 @@ export default function layers() {
            ),
           new PolygonLayer({
             id: 'buildings',
-            data: this.props.map.buildings,
+            data: this.state.buildings,
             extruded: true,
             wireframe: false,
             fp64: true,
@@ -105,7 +105,7 @@ export default function layers() {
             getPolygon: f => f.polygon,
             getElevation: f => f.height,
             getFillColor: [74, 80, 87],
-            lightSettings:this.state.buildslight,
+            lightSettings: this.state.buildslight,
             onClick: ({info, coordinate}) => console.log(coordinate),
           }),
     ]

@@ -67,14 +67,17 @@ class App extends Component {
       super();
       this.state = {
           viewState: {...INITIAL_VIEW_STATE},
+          buildings: BuildLayer,
           buildslight: {...LIGHT_SETTINGS}
       }
+      //this.buildslight = {...LIGHT_SETTINGS};
+
        this._onViewStateChange = this._onViewStateChange.bind(this);
        this._animateViewState = this._animateViewState.bind(this);
     }
   
     componentDidMount() {
-      self.intervalViewTimer = window.setInterval(self._animateViewState, 30);
+      this.intervalViewTimer = window.setInterval(this._animateViewState, 30);
     }
   
     _changeAnimationViewState() {
@@ -107,7 +110,7 @@ class App extends Component {
       lightsPosition[0] = lng;
       lightsPosition[1] = lat;
 
-      this.setState({light: {...this.state.buildslight, lightsPosition: [...this.state.buildslight.lightsPosition], 
+      this.setState({buildslight: {...this.state.buildslight, lightsPosition: [...this.state.buildslight.lightsPosition], 
       lightsStrength: [...this.state.buildslight.lightsStrength]}})
     }
   
@@ -128,10 +131,10 @@ class App extends Component {
       }
 
      let pos = 500 + (7200 - (zoom - 8) * 900)
-     const {buildslight} = this.state;
-     const {lightsPosition} = buildslight;
-
-     this.setState({light: {...buildslight, lightsPosition: [lightsPosition[0],lightsPosition[1],pos]}})
+     const {lightsPosition} = this.state.buildslight;
+     lightsPosition[2] = pos;
+     this.setState({buildslight: {...this.state.buildslight, lightsPosition: [...this.state.buildslight.lightsPosition], 
+      lightsStrength: [...this.state.buildslight.lightsStrength]}})
     }
   
     render() {
