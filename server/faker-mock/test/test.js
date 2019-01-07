@@ -62,7 +62,7 @@ module.exports = [
       data: {
         code: 200,
         msg: '获取数据成功',
-        'data|8000': [
+        'data|5000': [
           {
             coordinates: function() {
               let random = Math.random()

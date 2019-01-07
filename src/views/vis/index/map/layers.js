@@ -92,7 +92,7 @@ export default function layers() {
               pickable: true,
               extruded: true,
               radius: 100,
-              elevationScale: 1,
+              elevationScale: this.state.elevationScale,
               getPosition: d => d.coordinates,//[x,y,z]
               onHover: ({object, coordinate})=> console.log('hex layer ', coordinate),
               lightSettings:LIGHT_SETTINGSss,

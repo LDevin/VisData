@@ -2,6 +2,8 @@ const path = require('path');
 const opn = require('opn');
 
 const mode = process.env.MOCK_ENV;
+const bind_ip = process.env.BIND_IP ? process.env.BIND_IP : 'localhost';
+
 const proDev = {
     '/api/v1/bigData/*': { 
         target: 'http://192.168.1.151:8800',//'http://47.106.132.128:8800',
@@ -17,12 +19,12 @@ const proDev = {
 
 const proMock = {
     '/api/v1/*': { 
-        target: 'http://localhost:9000',
+        target: `http://${bind_ip}:9000`,
         secure: false, // 接受 运行在 https 上的服务
         changeOrigin: true
     },
     '/oauth/token': { 
-        target: 'http://localhost:9000',
+        target: `http://${bind_ip}:9000`,
         secure: false, // 接受 运行在 https 上的服务
         changeOrigin: true
     },
@@ -32,7 +34,7 @@ module.exports = {
     devServer: {
         inline: true,
         hot: true,
-        host: 'localhost',
+        host: bind_ip,
         port: 8088,
         compress: true,
         contentBase: require('../var/dir-vars.config').buildDir,

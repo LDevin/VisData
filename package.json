@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "gen": "node ./server/utils/generate.js",
+    "devindev": "cross-env BIND_IP=172.16.1.32 \"npm run fakerdev\"",
     "jsondev": "concurrently --kill-others-on-fail \"npm run jsonserver\" \"npm run mockdev\"",
     "fakerdev": "concurrently --kill-others-on-fail \"npm run fakerserver\" \"npm run mockdev\"",
     "jsonserver": "nodemon ./server/json-server/server.js",

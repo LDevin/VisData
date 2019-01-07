@@ -44,6 +44,8 @@ const INITIAL_VIEW_STATE = {
   bearing: bearingSet.init
 };
 
+const elevationScale = {min: 0.1, max: 2};
+
 const mapStateToProps = state => {
   return {map: state.map}
 }
@@ -69,18 +71,46 @@ class App extends Component {
           viewState: {...INITIAL_VIEW_STATE},
           time:0,
           buildings: BuildLayer,
+          elevationScale: elevationScale.min,
           buildslight: {...LIGHT_SETTINGS}
       }
 
        this._onViewStateChange = this._onViewStateChange.bind(this);
        this._animateViewState = this._animateViewState.bind(this);
+
+       this._startScaleAnimate = this._startScaleAnimate.bind(this);
+       this._animateScaleHeight = this._animateScaleHeight.bind(this);
     }
 
     componentDidMount() {
       this._animate()
+      this._animateScale();
       this.intervalViewTimer = window.setInterval(this._animateViewState, 30);
     }
   
+    _animateScale() {
+      this.startScaleTimer = setTimeout(this._startScaleAnimate, 3000);
+    }
+
+    _stopScaleAnimate() {
+      window.clearTimeout(this.startScaleTimer);
+      window.clearInterval(this.intervalScaleTimer);
+    }
+
+    _startScaleAnimate() {
+      this.intervalScaleTimer = window.setInterval(this._animateScaleHeight, 20);
+    }
+    _animateScaleHeight() {
+      let offset = 0.1;
+      if (this.state.elevationScale >= elevationScale.max) {
+        this._stopScaleAnimate();
+        offset = elevationScale.max
+      } else {
+        offset = this.state.elevationScale + 0.1
+      }
+      this.setState({elevationScale: offset});
+    }
+
     _changeAnimationViewState() {
 
     }
