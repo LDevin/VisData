@@ -30,8 +30,6 @@ const HexLayColorRange = [
   [209, 55, 78]
 ];
 
-const imgDir = '../../../../public/resources/images/';
-
 export default function layers() {
     return [
         new IconLayer({
