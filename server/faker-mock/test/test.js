@@ -1,3 +1,8 @@
+const lng = {min: 108.22477340698242,max:108.44123840332031}
+const lat = {min: 22.747372244925597,max:22.88692962789286}
+const lng_offset = lng.max - lng.min;
+const lat_offset = lat.max - lat.min;
+
 module.exports = [
     {
       path: '/api/v1/test/post',
@@ -57,12 +62,12 @@ module.exports = [
       data: {
         code: 200,
         msg: '获取数据成功',
-        'data|10000': [
+        'data|8000': [
           {
-            'no|0-36.5-15': 108.22, 
-            'to|0-22.5-15': 22.33,
             coordinates: function() {
-             return (this.no / 100 + 108.20) + ":" + (this.to / 100 + 22.70)
+              let random = Math.random()
+              let random2 = Math.random()
+              return (lng.min + lng_offset*random) + ":" + (lat.min + lat_offset*random2)
             }
           }
         ]
@@ -79,23 +84,23 @@ module.exports = [
         'data': [
           {
             'id': '33',
-            'name': 'acb',
-            coordinates: '108.156623569:22.8562354698:1200'
+            'name': '青秀区',
+            coordinates: '108.29978942871094:22.787260370919913:1500'
           },
           {
             'id': '33',
-            'name': 'ddd',
-            coordinates: '108.3588623569:22.8162784554698:1200'
+            'name': '武宁区',
+            coordinates: '108.34167480468749:22.820491567770727:1500'
           },
           {
             'id': '33',
-            'name': 'ccdfds',
-            coordinates: '108.4064126559:22.808952354698:1200'
+            'name': '横县',
+            coordinates: '108.30236434936523:22.828560777797613:1500'
           },
           {
             'id': '33',
-            'name': 'cccsadfs',
-            coordinates: '108.41685626559:22.80012952354698:1200'
+            'name': 'XX街道',
+            coordinates: '108.28983306884766:22.8579856077743647:1500'
           }
         ]
       }
@@ -110,12 +115,10 @@ module.exports = [
         msg: '获取数据成功',
         'data|5000': [
           {
-            'no|0-36.5-15': 108.22, 
-            'to|0-22.5-15': 22.33,
             coordinates: function() {
-              let random = Math.random() * 0.00051;
-              let rando2 = Math.random() * 0.00020122;
-             return (this.no / 100 + 108.20 + random) + ":" + (this.to / 100 + 22.70 + rando2 + ':200')
+              let random = Math.random()
+              let random2 = Math.random()
+              return (lng.min + lng_offset*random) + ":" + (lat.min + lat_offset*random2)+ ':200'
             }
           }
         ]
@@ -129,14 +132,12 @@ module.exports = [
       data: {
         code: 200,
         msg: '获取数据成功',
-        'data|5000': [
+        'data|1000': [
           {
-            'no|0-40.10-15': 108.22, 
-            'to|0-25.12-15': 22.33,
             coordinates: function() {
-              let random = Math.random() * 0.000526;
-              let rando2 = Math.random() * 0.0000222;
-             return (this.no / 100 + 108.17 + random) + ":" + (this.to / 100 + 22.680 + rando2 + ':250')
+              let random = Math.random()
+              let random2 = Math.random()
+              return (lng.min + lng_offset*random) + ":" + (lat.min + lat_offset*random2)+ ':250'
             }
           }
         ]

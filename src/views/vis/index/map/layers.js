@@ -1,4 +1,7 @@
 import DeckGL, {PolygonLayer, ScatterplotLayer, PointCloudLayer, HexagonLayer,IconLayer,TextLayer, FlyToInterpolator, PathLayer,COORDINATE_SYSTEM} from 'deck.gl';
+import {TripsLayer} from '@deck.gl/experimental-layers';
+import PathLayerData from '../../../../public/resources/data/road_path.json';
+import RoadTripData from '../../../../public/resources/data/road_lg1.json';
 
 const bearingSet = {min: -30, init: 0, max: 30};
 const pitchSet = {min: 50, max: 60};
@@ -52,7 +55,8 @@ export default function layers() {
             wrapLongitude: true,
             getPosition: d => d.coordinates,
             getIcon: d => 'marker',
-            getColor: d => [255, 140, 0],
+            getColor: d => [150, 223, 0],
+            getSize: Math.pow(1.3, this.state.viewState.zoom - 12)
         }),
         new PointCloudLayer({
             id: 'point-cloud-layer_1',
@@ -69,13 +73,14 @@ export default function layers() {
             data: this.props.map.texts,
             pickable: true,
             extruded: true,
-            sizeScale: 2,
-            getColor: [254, 151, 13],
+            sizeScale: 3,
+            getColor: [223, 244, 239],
             getTextAnchor: 'middle',
             getAlignmentBaseline: 'bottom',
             getPosition: d => d.coordinates, //[x,y,z]
             getText: d => d.name,
             getAngle: -20,
+            characterSet:['青', '区', '秀', '武', '宁', '横', '县','街','道'],
             getSize: Math.pow(1.5, this.state.viewState.zoom - 5),
         }),
         new HexagonLayer({
@@ -96,7 +101,7 @@ export default function layers() {
             }
            ),
           new PolygonLayer({
-            id: 'buildings',
+            id: '3d-buildings',
             data: this.state.buildings,
             extruded: true,
             wireframe: false,
@@ -110,5 +115,27 @@ export default function layers() {
             lightSettings: this.state.buildslight,
             onClick: ({info, coordinate}) => console.log(coordinate),
           }),
+          new TripsLayer({
+            id: 'trips',
+            data: RoadTripData,
+            getPath: d => d.segments,
+            getColor: d => (d.vendor === 0 ? [253, 128, 93] : [254, 173, 84]),
+            opacity: 0.3,
+            strokeWidth: 2,
+            trailLength:180,
+            currentTime: this.state.time
+          }),
+          new PathLayer({
+              id: 'path-layer_1',
+              data: PathLayerData,
+              pickable: true,
+              widthScale: Math.max(2, 21 - this.state.viewState.zoom),
+              widthMinPixels: 4,
+              getPath: d => d.path,
+              getColor: [37, 183, 144, 150],
+              getWidth: d => 3,
+              rounded: true,
+              getPolygonOffset: ({layerIndex}) => [200, layerIndex * 100],
+          })
     ]
 }

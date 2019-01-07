@@ -67,27 +67,36 @@ class App extends Component {
       super();
       this.state = {
           viewState: {...INITIAL_VIEW_STATE},
+          time:0,
           buildings: BuildLayer,
           buildslight: {...LIGHT_SETTINGS}
       }
-      //this.buildslight = {...LIGHT_SETTINGS};
 
        this._onViewStateChange = this._onViewStateChange.bind(this);
        this._animateViewState = this._animateViewState.bind(this);
     }
-  
-    componentDidUpdate() {
-      console.log('will update ', this.props.map.texts);
-    }
 
     componentDidMount() {
+      this._animate()
       this.intervalViewTimer = window.setInterval(this._animateViewState, 30);
     }
   
     _changeAnimationViewState() {
 
     }
+    _animate() {
+      const {
+        loopLength = 1800, // unit corresponds to the timestamp in source data
+        animationSpeed = 30 // unit time per second
+      } = this.props;
+      const timestamp = Date.now() / 1000;
+      const loopTime = loopLength / animationSpeed;
   
+      this.setState({
+        time: ((timestamp % loopTime) / loopTime) * loopLength
+      });
+      this._animationFrame = window.requestAnimationFrame(this._animate.bind(this));
+    }
     _animateViewState() {
       let {lightsPosition, lightsStrength} = this.state.buildslight;
       let lng = lightsPosition[0], 
