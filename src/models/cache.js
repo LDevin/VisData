@@ -23,6 +23,10 @@ const _Com = {
 
 const _Map = {
     hexs:null,
+    texts:null,
+    icons:null,
+    characterSet:[],
+    pointClouds:null,
     ZoneLngLatData: null,
     gridZoneWarnData:null,
     ScatterplotData: null,

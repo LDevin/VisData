@@ -36,6 +36,7 @@ export default function layers() {
             id:'icon-layer_1',
             data: this.props.map.icons,
             pickable: true,
+            autoHighlight:true,
             iconAtlas: require('../../../../public/resources/images/icon-atlas.png'),
             iconMapping: {
                 marker: {
@@ -55,8 +56,9 @@ export default function layers() {
         }),
         new PointCloudLayer({
             id: 'point-cloud-layer_1',
-            pickable: true,
             data: this.props.map.pointClouds,
+            pickable: true,
+            autoHighlight:true,
             radiusPixels: Math.pow(1.5, this.state.viewState.zoom - 10) + 5,
             getPosition: d => d.coordinates,
             getColor: [254, 151, 13],

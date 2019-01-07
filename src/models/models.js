@@ -68,3 +68,51 @@ export const fetchDangers = () => {
     })
 }
 
+export const fetchStreetLabel = () => {
+    return _Get(_CONST.API.FETCH_STREETS, (dispatch, result) => {
+        _CONST.DEBUG ? console.log('FETCH_STREETS success'):''
+        let res = [];
+        if (Array.isArray(result)) {
+            result.forEach( item => {
+                let cor = item.coordinates.split(':')
+                res.push({coordinates: [Number(cor[0]), Number(cor[1]),Number(cor[2])], name: item.name, id: item.id})
+            }) 
+        }
+        let action = bindActions.changeMap({type: _CONST.ACTION.CH_TEXTS, payload: res});
+        dispatch(action)
+        console.log('store ', Store.getState().map)
+    })
+}
+
+export const fetchChecks = () => {
+    return _Get(_CONST.API.FETCH_CHECKS, (dispatch, result) => {
+        _CONST.DEBUG ? console.log('FETCH_CHECKS success'):''
+        let res = [];
+        if (Array.isArray(result)) {
+            result.forEach( item => {
+                let cor = item.coordinates.split(':')
+                res.push({coordinates: [Number(cor[0]), Number(cor[1]),Number(cor[2])]})
+            }) 
+        }
+        let action = bindActions.changeMap({type: _CONST.ACTION.CH_POINTCLOUD, payload: res});
+        dispatch(action)
+        console.log('store ', Store.getState().map)
+    })
+}
+
+export const fetchUnits = () => {
+    return _Get(_CONST.API.FETCH_UNITS, (dispatch, result) => {
+        _CONST.DEBUG ? console.log('FETCH_UNITS success'):''
+        let res = [];
+        if (Array.isArray(result)) {
+            result.forEach( item => {
+                let cor = item.coordinates.split(':')
+                res.push({coordinates: [Number(cor[0]), Number(cor[1]),Number(cor[2])]})
+            }) 
+        }
+        let action = bindActions.changeMap({type: _CONST.ACTION.CH_ICONS, payload: res});
+        dispatch(action)
+        console.log('store ', Store.getState().map)
+    })
+}
+

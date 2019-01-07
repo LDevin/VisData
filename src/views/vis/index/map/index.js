@@ -76,6 +76,10 @@ class App extends Component {
        this._animateViewState = this._animateViewState.bind(this);
     }
   
+    componentDidUpdate() {
+      console.log('will update ', this.props.map.texts);
+    }
+
     componentDidMount() {
       this.intervalViewTimer = window.setInterval(this._animateViewState, 30);
     }
