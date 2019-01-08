@@ -62,7 +62,7 @@ module.exports = [
       data: {
         code: 200,
         msg: '获取数据成功',
-        'data|5000': [
+        'data|500': [
           {
             coordinates: function() {
               let random = Math.random()
@@ -113,7 +113,7 @@ module.exports = [
       data: {
         code: 200,
         msg: '获取数据成功',
-        'data|2000': [
+        'data|800': [
           {
             coordinates: function() {
               let random = Math.random()
@@ -132,7 +132,7 @@ module.exports = [
       data: {
         code: 200,
         msg: '获取数据成功',
-        'data|2000': [
+        'data|600': [
           {
             coordinates: function() {
               let random = Math.random()
@@ -151,7 +151,7 @@ module.exports = [
       data: {
         code: 200,
         msg: '获取数据成功',
-        'data|8000': [
+        'data|546': [
           {
             coordinates: function() {
               let random = Math.random()
