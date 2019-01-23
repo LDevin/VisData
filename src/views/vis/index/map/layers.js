@@ -1,6 +1,8 @@
 import DeckGL, {PolygonLayer, ScatterplotLayer, PointCloudLayer, HexagonLayer,GridLayer,
     IconLayer,TextLayer, FlyToInterpolator, PathLayer,COORDINATE_SYSTEM} from 'deck.gl';
 
+import _CONST from 'consts';
+
 import {TripsLayer} from '@deck.gl/experimental-layers';
 import PathLayerData from '../../../../public/resources/data/road_path.json';
 import RoadTripData from '../../../../public/resources/data/road_lg1.json';
@@ -27,12 +29,22 @@ const LIGHT_SETTINGSss = {
 };
 
 const HexLayColorRange = [
-  [1, 152, 189],
-  [73, 227, 206],
-  [216, 254, 181],
-  [254, 237, 177],
-  [254, 173, 84],
-  [209, 55, 78]
+    [0x03, 0xfe, 0x8d],
+    [0x24, 0xfa, 0x7e],
+    [0x47, 0xf5, 0x6d],
+    [0x65, 0xf2, 0x60],
+    [0x89, 0xec, 0x4f],
+    [0xab, 0xe8, 0x3f],
+    [0xcb, 0xe3, 0x30],
+    [0xe8, 0xe0, 0x23],
+    [0xff, 0xd1, 0x1c],
+
+    [0xff, 0xb1, 0x21],
+    [0xff, 0x8c, 0x28],
+    [0xff, 0x71, 0x2d],
+    [0xff, 0x4d, 0x34],
+    [0xff, 0x2b, 0x3b],
+    [0xff, 0x0a, 0x40], 
 ];
 
 const GridColorRange = [
@@ -44,6 +56,9 @@ const GridColorRange = [
     [150, 170, 66]
 ];
 
+const normalIconSources = require('../../../../public/resources/images/icon-atlas.png');
+const monitorIconSources = require('../../../../public/resources/images/monitor.png');
+
 export default function layers() {
     return [
         new IconLayer({
@@ -51,22 +66,31 @@ export default function layers() {
             data: this.props.map.icons,
             pickable: true,
             autoHighlight:true,
-            iconAtlas: require('../../../../public/resources/images/icon-atlas.png'),
+            iconAtlas: normalIconSources,
             iconMapping: {
-                marker: {
+                normal: {
                   x: 0,
                   y: 0,
                   width: 128,
                   height: 128,
                   anchorY: 128,
                   mask: true
+                },
+                monitor: {
+                    x: 0,
+                    y: 0,
+                    width: 256,
+                    height: 256,
+                    anchorY: 256,
+                    mask: true
                 }
             },
             sizeScale: 15,
             wrapLongitude: true,
+            onHover: this._onHover,
             getPosition: d => d.coordinates,
-            getIcon: d => 'marker',
-            getColor: d => [150, 223, 0],
+            getIcon: d => d.icon,
+            getColor: d => [0x33, 0xfd, 0xff],
             getSize: Math.pow(1.3, this.state.viewState.zoom - 12)
         }),
         new PointCloudLayer({
@@ -77,7 +101,8 @@ export default function layers() {
             radiusPixels: Math.pow(1.5, this.state.viewState.zoom - 10) + 5,
             getPosition: d => d.coordinates,
             getColor: [254, 151, 13],
-            lightSettings:{}
+            lightSettings:{},
+            onHover: this._onHover,
         }),
         new TextLayer({
             id: 'text-layer_1',
@@ -106,22 +131,24 @@ export default function layers() {
             upperPercentile: 100,
             autoHighlight:true,
             getPosition: d => d.coordinates,
+            //onHover: this._onHover,
         }),
         new HexagonLayer({
               id: 'hexagon-layer_1',
               data: this.props.map.hexs,
               colorRange: HexLayColorRange,
-              coverage: 0.2,
+            //   colorDomain:[1, 50],
+              coverage: 0.1,
               upperPercentile: 100,
               pickable: true,
               extruded: true,
-              radius: 100,
+              radius: 200,
               elevationScale: this.state.elevationScale,
               getPosition: d => d.coordinates,//[x,y,z]
-              onHover: ({object, coordinate})=> console.log('hex layer ', coordinate),
               lightSettings:LIGHT_SETTINGSss,
               autoHighlight:true,
               opacity: 0.8,
+              onHover: info => console.log('info.object ',info.object)
             }
            ),
           new PolygonLayer({

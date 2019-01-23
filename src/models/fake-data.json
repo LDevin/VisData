@@ -1,0 +1,273 @@
+[
+    [
+        {
+    "group2": {
+        "fixs": {
+            "counthis": {
+                "day": "2018-11-11",
+                "key": 1129
+            },
+            "countcur": {
+                "day": "2018-12-11",
+                "key": 200
+            }
+        },
+        "checks": {
+            "counthis": {
+                "day": "2018-11-11",
+                "key": 147
+            },
+            "countcur": {
+                "day": "2018-12-11",
+                "key": 660
+            }
+        }
+    },
+    "group1": {
+        "fixs": {
+            "counthis": {
+                "day": "2017-12-11",
+                "key": 123
+            },
+            "countcur": {
+                "day": "2018-12-11",
+                "key": 452
+            }
+        },
+        "checks": {
+            "counthis": {
+                "day": "2017-12-11",
+                "key": 1004
+            },
+            "countcur": {
+                "day": "2018-12-11",
+                "key": 668
+            }
+        }
+    }
+},{
+    "group2": {
+        "fixs": {
+            "counthis": {
+                "day": "2018-11-11",
+                "key": 129
+            },
+            "countcur": {
+                "day": "2018-12-11",
+                "key": 1141
+            }
+        },
+        "checks": {
+            "counthis": {
+                "day": "2018-11-11",
+                "key": 1470
+            },
+            "countcur": {
+                "day": "2018-12-11",
+                "key": 108
+            }
+        }
+    },
+    "group1": {
+        "fixs": {
+            "counthis": {
+                "day": "2017-12-11",
+                "key": 852
+            },
+            "countcur": {
+                "day": "2018-12-11",
+                "key": 221
+            }
+        },
+        "checks": {
+            "counthis": {
+                "day": "2017-12-11",
+                "key": 1041
+            },
+            "countcur": {
+                "day": "2018-12-11",
+                "key": 523
+            }
+        }
+    }
+}],[{
+    "group2": {
+        "fixs": {
+            "counthis": {
+                "day": "2018-11-11",
+                "key": 1129
+            },
+            "countcur": {
+                "day": "2018-12-11",
+                "key": 85
+            }
+        },
+        "checks": {
+            "counthis": {
+                "day": "2018-11-11",
+                "key": 1790
+            },
+            "countcur": {
+                "day": "2018-12-11",
+                "key": 669
+            }
+        }
+    },
+    "group1": {
+        "fixs": {
+            "counthis": {
+                "day": "2017-12-11",
+                "key": 111
+            },
+            "countcur": {
+                "day": "2018-12-11",
+                "key": 256
+            }
+        },
+        "checks": {
+            "counthis": {
+                "day": "2017-12-11",
+                "key": 10804
+            },
+            "countcur": {
+                "day": "2018-12-11",
+                "key": 6608
+            }
+        }
+    }
+},{
+    "group2": {
+        "fixs": {
+            "counthis": {
+                "day": "2018-11-11",
+                "key": 1129
+            },
+            "countcur": {
+                "day": "2018-12-11",
+                "key": 88
+            }
+        },
+        "checks": {
+            "counthis": {
+                "day": "2018-11-11",
+                "key": 14790
+            },
+            "countcur": {
+                "day": "2018-12-11",
+                "key": 6608
+            }
+        }
+    },
+    "group1": {
+        "fixs": {
+            "counthis": {
+                "day": "2017-12-11",
+                "key": 963
+            },
+            "countcur": {
+                "day": "2018-12-11",
+                "key": 4
+            }
+        },
+        "checks": {
+            "counthis": {
+                "day": "2017-12-11",
+                "key": 10804
+            },
+            "countcur": {
+                "day": "2018-12-11",
+                "key": 6608
+            }
+        }
+    }
+}],[{
+    "group2": {
+        "fixs": {
+            "counthis": {
+                "day": "2018-11-11",
+                "key": 1129
+            },
+            "countcur": {
+                "day": "2018-12-11",
+                "key": 56
+            }
+        },
+        "checks": {
+            "counthis": {
+                "day": "2018-11-11",
+                "key": 1479
+            },
+            "countcur": {
+                "day": "2018-12-11",
+                "key": 68
+            }
+        }
+    },
+    "group1": {
+        "fixs": {
+            "counthis": {
+                "day": "2017-12-11",
+                "key": 845
+            },
+            "countcur": {
+                "day": "2018-12-11",
+                "key": 546
+            }
+        },
+        "checks": {
+            "counthis": {
+                "day": "2017-12-11",
+                "key": 10804
+            },
+            "countcur": {
+                "day": "2018-12-11",
+                "key": 6608
+            }
+        }
+    }
+},{
+    "group2": {
+        "fixs": {
+            "counthis": {
+                "day": "2018-11-11",
+                "key": 1129
+            },
+            "countcur": {
+                "day": "2018-12-11",
+                "key": 53
+            }
+        },
+        "checks": {
+            "counthis": {
+                "day": "2018-11-11",
+                "key": 1470
+            },
+            "countcur": {
+                "day": "2018-12-11",
+                "key": 408
+            }
+        }
+    },
+    "group1": {
+        "fixs": {
+            "counthis": {
+                "day": "2017-12-11",
+                "key": 256
+            },
+            "countcur": {
+                "day": "2018-12-11",
+                "key": 777
+            }
+        },
+        "checks": {
+            "counthis": {
+                "day": "2017-12-11",
+                "key": 10804
+            },
+            "countcur": {
+                "day": "2018-12-11",
+                "key": 660
+            }
+        }
+    }
+}]]

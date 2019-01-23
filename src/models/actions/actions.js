@@ -6,19 +6,18 @@ export function changeUserName(user) {
     }
 }
 
-export function changeBase(user) {
-    return {
-        type: 'CH_DAY',
-        payload: user,
-    }
+export function changeBase(actions) {
+    return {...actions}
 }
 
-export function changeCom(user) {
-    return {
-        type: 'CH_ALL',
-        payload: user,
-    }
+export function changeCom(actions) {
+    return {...actions}
 }
+
 export function changeMap(actions) {
+    return {...actions}
+}
+
+export function changeCache(actions) {
     return {...actions}
 }

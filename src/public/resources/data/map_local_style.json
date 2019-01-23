@@ -12,11 +12,11 @@
   "sources": {
     "openmaptiles": {
       "type": "vector",
-      "url":"http://120.237.91.74:8081/data/v3.json"
+      "url":"http://120.78.146.167:8082/data/v3.json"
     }
   },
-  "sprite": "http://120.237.91.74:8081/styles/dark-matter/sprite",
-  "glyphs": "http://120.237.91.74:8081/fonts/{fontstack}/{range}.pbf",
+  "sprite": "http://120.78.146.167:8082/styles/dark-matter/sprite",
+  "glyphs": "http://120.78.146.167:8082/fonts/{fontstack}/{range}.pbf",
   "layers": [
     {
       "id": "background-copy",
@@ -1584,7 +1584,8 @@
               16
             ]
           ]
-        }
+        },
+        "visibility": "none"
       },
       "paint": {
         "text-color": "rgba(255, 255, 255, 1)",
@@ -1634,7 +1635,7 @@
             ]
           ]
         },
-        "visibility": "visible"
+        "visibility": "none"
       },
       "paint": {
         "text-color": "hsl(0, 0%, 13%)",
@@ -1684,7 +1685,7 @@
             ]
           ]
         },
-        "visibility": "visible"
+        "visibility": "none"
       },
       "paint": {
         "text-color": "hsl(0, 0%, 13%)",

@@ -1,18 +1,22 @@
 import React, {Component} from 'react';
-import DeckGL from 'deck.gl';
+import DeckGL,{LinearInterpolator} from 'deck.gl';
 import ReactMapGL, {NavigationControl,StaticMap} from 'react-map-gl';
 import {connect} from 'react-redux';
+
+import _CONST from 'consts';
+import bindActions from 'bindActions';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '../../../../public/resources/css/map.css';  
 
 import Layers from './layers';
+import RenderTooltips from './hover-tips';
 
 import MapStyle from 'mapStyle';
 import BuildLayer from 'buildLayer';
 
 const bearingSet = {min: -30, init: 0, max: 30};
-const pitchSet = {min: 50, max: 60};
+const pitchSet = {min: 50, max: 60, init: 0};
 const zoomSet = {min: 8.0, max: 20, maxTrans: 15, anit: 1.0, initZoom: 12.655823249249143};
 
 const lngLatSet = {initLng: 108.31390857696570, initLat: 22.837050141589999};
@@ -37,14 +41,16 @@ const LIGHT_SETTINGS = {
 const INITIAL_VIEW_STATE = {
   latitude: 22.817050141479882,
   longitude:  108.31390857696533,
-  zoom: zoomSet.initZoom,
+  zoom: 11.5,
   maxZoom: zoomSet.max,
   minZoom: zoomSet.min,
-  pitch: pitchSet.min,
+  pitch: pitchSet.init,
   bearing: bearingSet.init
 };
 
-const elevationScale = {min: 0.1, max: 2};
+const elevationScale = {min: 0.0, max: 2};
+
+const transitionInterpolator = new LinearInterpolator(['zoom']);
 
 const mapStateToProps = state => {
   return {map: state.map}
@@ -59,7 +65,7 @@ const mapDispathToProps = dispatch => {
 
          dispatch(action);
          console.log(' day = ', Store.getState().base.day);
-      }
+      },
   }
 }
 
@@ -80,16 +86,32 @@ class App extends Component {
 
        this._startScaleAnimate = this._startScaleAnimate.bind(this);
        this._animateScaleHeight = this._animateScaleHeight.bind(this);
+
+       this._onHover = this._onHover.bind(this);
+       this._onLoad = this._onLoad.bind(this);
+       this._rotateCamera = this._rotateCamera.bind(this);
+       this._animatePitch = this._animatePitch.bind(this);
+       this._animateBearing = this._animateBearing.bind(this)
+       this._animateAll = this._animateAll.bind(this)
+       this._paseAnimateRotate = this._paseAnimateRotate.bind(this)
     }
 
     componentDidMount() {
       this._animate()
-      this._animateScale();
       this.intervalViewTimer = window.setInterval(this._animateViewState, 30);
     }
   
-    _animateScale() {
-      this.startScaleTimer = setTimeout(this._startScaleAnimate, 3000);
+    _animateScale(mis) {
+      this._stopScaleAnimate();
+      this.setState({elevationScale: elevationScale.min})
+      this.startScaleTimer = setTimeout(this._startScaleAnimate, mis);
+    }
+
+    componentWillReceiveProps(nextProps) {
+      if (nextProps.map.hexs && nextProps.map.hexs.length > 0 && 
+        nextProps.map.hexs != this.props.map.hexs) {
+        this._animateScale(50);
+      }
     }
 
     _stopScaleAnimate() {
@@ -114,6 +136,7 @@ class App extends Component {
     _changeAnimationViewState() {
 
     }
+
     _animate() {
       const {
         loopLength = 1800, // unit corresponds to the timestamp in source data
@@ -127,6 +150,72 @@ class App extends Component {
       });
       this._animationFrame = window.requestAnimationFrame(this._animate.bind(this));
     }
+    _onLoad() {
+      this._rotateCamera();
+    }
+    _rotateCamera() {
+      // change bearing by 120 degrees.
+     // const bearing = this.state.viewState.bearing + 10;
+      this.setState({
+        viewState: {
+          ...this.state.viewState,
+         // pitch: 60,
+          zoom: 14,
+         // bearing: 60,
+          transitionDuration: 5000,
+          transitionInterpolator,
+          onTransitionEnd: this._animatePitch
+        }
+      });
+    }
+
+    _animatePitch() {
+      this.setState({
+        viewState: {
+          ...this.state.viewState,
+          pitch: 60,
+         // bearing: 60,
+          transitionDuration: 1000,
+          transitionInterpolator: new LinearInterpolator('pitch'),
+          onTransitionEnd: this._animateBearing
+        }
+      });
+    }
+
+    _animateBearing() {
+      this.setState({
+        viewState: {
+          ...this.state.viewState,
+         // pitch: 60,
+          bearing: 180,
+          transitionDuration: 20000,
+          transitionInterpolator: new LinearInterpolator('bearing'),
+          onTransitionEnd: this._animateAll
+        }
+      });
+    }
+
+    _animateAll() {
+      this.setState({
+        viewState: {
+          ...this.state.viewState,
+          pitch: 0,
+          bearing: 0,
+          zoom: 11.5,
+          transitionDuration: 6000,
+          transitionInterpolator: new LinearInterpolator('bearing', 'zoom', 'pitch'),
+          onTransitionEnd: this._paseAnimateRotate
+        }
+      });
+    }
+
+    _paseAnimateRotate() {
+      let self = this;
+      setTimeout(() => {
+        self._rotateCamera()
+      }, 200)
+    }
+
     _animateViewState() {
       let {lightsPosition, lightsStrength} = this.state.buildslight;
       let lng = lightsPosition[0], 
@@ -180,6 +269,10 @@ class App extends Component {
       lightsStrength: [...this.state.buildslight.lightsStrength]}})
     }
   
+    _onHover({x,y,object,layer}) {
+      this.setState({x,y,hoveredObject: object,hoveredLayer: layer.id})
+    }
+
     render() {
       const {viewState} = this.state;
       return (
@@ -187,6 +280,7 @@ class App extends Component {
             <DeckGL
                 layers={Layers.call(this)}
                 initialViewState={INITIAL_VIEW_STATE}
+                onLoad={this._onLoad}
                 controller={true}
                 viewState={viewState}
                 onViewStateChange={this._onViewStateChange}
@@ -196,6 +290,7 @@ class App extends Component {
                 reuseMaps
                 mapStyle={MapStyle}
                 />
+                {RenderTooltips.call(this)}
             </DeckGL>
           </div>
       );

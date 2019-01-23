@@ -1,0 +1,14 @@
+div .frag_sss_sub {
+    --pressed: #2798a0;
+    float: right;
+    font-size: 12px;
+    border: none;
+    margin-left: 10px;
+    height: 20px;
+    line-height: 20px;
+    width: 50px;
+    cursor: pointer;
+    text-align: center;
+    color: var(--pressed);
+    border: 1px solid #2798a0;
+}

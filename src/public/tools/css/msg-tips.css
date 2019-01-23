@@ -1,0 +1,19 @@
+.dialog-msg-tips {
+    position: absolute;
+    margin: 0;
+    width: auto;
+    min-width: 60px;
+    height: 40px;
+    z-index: 2000;
+    font-size: 18px;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+
+.dialog-msg-content {
+    text-align: center;
+    line-height: 35px;
+    height: 100%;
+    width: 100%;
+    color: #25B4FC;
+}

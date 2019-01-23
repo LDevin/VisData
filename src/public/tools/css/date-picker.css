@@ -1,0 +1,98 @@
+.d-rc-datepick-lineinput {
+    float: right;
+    width: 70px;
+    text-align: right;
+    margin-right: 15px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 12px;
+    color: #cccccc;
+  }
+  .d-rc-datepick-lineinput .d-rc-datepick-lineinput-date {
+    --pressed:#fff;
+    height: 20px;
+    width: 100%;
+    text-align: right;
+    padding-right: 15px;
+    cursor: pointer; 
+    border: 1px solid #2798a0;
+    color: var(--pressed);
+    background: url(./common_arrow.png) no-repeat;
+    background-position: right 8px;
+}
+/* .d-rc-datepick-lineinput .d-rc-datepick-lineinput-date:hover {
+  border: 1px solid #2798A0;
+} */
+
+.rc-calendar {
+    width: 300px;
+}
+.rc-calendar-picker {
+    color: #FFF!important;
+}
+
+.rc-calendar-picker .rc-calendar-date-panel {
+    background-color: #01203f!important;
+    border: 1px solid #1d6085!important;
+    border-radius: 2px;
+    box-shadow: 0 2px 4px #1d6085;
+}
+.rc-calendar-header {
+    height: 44px;
+    line-height: 40px;
+    border-bottom: 1px solid #1d6085;
+    font-size: 15px;
+    padding: 0px;
+}
+.rc-calendar-header > div > a {
+  font-weight: bold;
+  display: inline-block;
+  padding: 4px 5px;
+  text-align: center;
+  width: 30px;
+  color: #fff;
+}
+.rc-calendar-ym-select > a {
+    font-size: 14px;
+    color: #fff;
+}
+
+.rc-calendar-date-cell .rc-calendar-date {
+    display: block;
+    width: 50px;
+    margin: 0 auto;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 2px 2px;
+    height: 36px;
+    padding: 0;
+    background: transparent;
+    line-height: 36px;
+    text-align: center;
+  }
+
+  tr > th {
+    padding: 4px 0px;
+    line-height: 20px;
+    font-size: 14px;
+  }
+
+  tr > td.rc-calendar-cell {
+    font-size: 14px;
+  }
+
+  .rc-calendar-month-panel-cell .rc-calendar-month-panel-month:hover {
+    background: #3fc7fa88;
+    cursor: pointer;
+  }
+  .rc-calendar-month-panel-cell-disabled .rc-calendar-month-panel-month {
+    color: #bfbfbf;
+  }
+  .rc-calendar-month-panel-cell-disabled .rc-calendar-month-panel-month:hover {
+    background: white;
+    cursor: not-allowed;
+  }
+  .rc-calendar-month-panel-selected-cell .rc-calendar-month-panel-month {
+    background: #3fc7fa;
+    color: #fff;
+  }
