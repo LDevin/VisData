@@ -12,6 +12,9 @@ export function map(state=_Map, action) {
         return {...state, icons: action.payload}
         case 'CH_GRIDS':
         return {...state, grids: action.payload}
+        case 'CH_CHARACTER':
+        return {...state, characterSet: action.payload}
+
         case 'CH_MAP':
         return {...state, ...action.payload}
         default:

@@ -10,6 +10,8 @@ const CONST = {
         FETCH_UNITS: '/api/v1/units',
         FETCH_DEVICES: '/api/v1/devices',
 
+        FETCH_GRID_STREET: '/api/v1/grid/street',
+
         FETCH_DEV_RES: '/api/v1/devices/response',
         FETCH_DEV_RUN_STATUS: '/api/v1/devices/runstatus',
         FETCH_DEV_ALARM_STATUS: '/api/v1/devices/alarmstatus',
@@ -19,6 +21,7 @@ const CONST = {
         FETCH_DEV_RES_DETAIL: '/api/v1/devices/response/details',
         FETCH_DEV_RUN_DETAIL: '/api/v1/devices/runstatus/details',
         FETCH_DEV_ALARM_DETAIL: '/api/v1/devices/alarmstatus/details',
+        FETCH_NET_COMS_DETAILS: '/api/v1/netcoms/details',
     },
     KEY: {
         ACCESS_TOKEN: 'Authorization',
@@ -43,6 +46,7 @@ const CONST = {
         CH_POINTCLOUD:'CH_POINTCLOUD',
         CH_ICONS:'CH_ICONS',
         CH_GRIDS: 'CH_GRIDS',
+        CH_CHARACTER: 'CH_CHARACTER',
 
         CH_COM_SYSTYPE: 'CH_COM_SYSTYPE',
         CH_DEV_RES: 'CH_DEV_RES',

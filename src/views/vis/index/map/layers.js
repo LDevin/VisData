@@ -77,12 +77,20 @@ export default function layers() {
                   mask: true
                 },
                 monitor: {
-                    x: 0,
+                    x: 128,
                     y: 0,
-                    width: 256,
-                    height: 256,
-                    anchorY: 256,
+                    width: 128,
+                    height: 128,
+                    anchorY: 128,
                     mask: true
+                },
+                alarm: {
+                    x: 128,
+                    y: 0,
+                    width: 128,
+                    height: 128,
+                    anchorY: 128,
+                    mask: false
                 }
             },
             sizeScale: 15,
@@ -90,7 +98,7 @@ export default function layers() {
             onHover: this._onHover,
             getPosition: d => d.coordinates,
             getIcon: d => d.icon,
-            getColor: d => [0x33, 0xfd, 0xff],
+            getColor: d => [d.r, d.g, d.b],//0xfd, 0xee
             getSize: Math.pow(1.3, this.state.viewState.zoom - 12)
         }),
         new PointCloudLayer({
@@ -115,8 +123,8 @@ export default function layers() {
             getAlignmentBaseline: 'bottom',
             getPosition: d => d.coordinates, //[x,y,z]
             getText: d => d.name,
-            getAngle: -20,
-            characterSet:['青', '区', '秀', '武', '宁', '横', '县','街','道'],
+            getAngle: -10,
+            characterSet: this.props.map.characterSet, //['青', '区', '秀', '武', '宁', '横', '县','街','道'],
             getSize: Math.pow(1.5, this.state.viewState.zoom - 5),
         }),
         new GridLayer({
@@ -182,8 +190,8 @@ export default function layers() {
               pickable: true,
               widthScale: Math.max(2, 21 - this.state.viewState.zoom),
               widthMinPixels: 4,
-              getPath: d => d.path,
-              getColor: [37, 183, 144, 150],
+              getPath: d => d.path,//#ff8c28
+              getColor: [0xff, 0x8c, 0x28, 150],
               getWidth: d => 3,
               rounded: true,
               getPolygonOffset: ({layerIndex}) => [200, layerIndex * 100],

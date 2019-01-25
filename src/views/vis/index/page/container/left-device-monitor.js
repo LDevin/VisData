@@ -217,9 +217,9 @@ class DeviceWarnStatistics extends Component {
             this.chart.on('click', (param) => {
                 console.log('statChart_checkSameMonth_check click',param.name);
                 let deviceType;
-                switch(param.data.name){
-                    case '告警设备':deviceType=5;break;
-                    case '告警未处理':deviceType=6;break;
+                switch(param.name){
+                    case '告警设备':deviceType=1;break;
+                    case '告警未处理':deviceType=2;break;
                 }
                 self.props.onDevAlarmDetails(1, deviceType)
                 //console.log('systemType= ',self.props.cacheData.systemType)

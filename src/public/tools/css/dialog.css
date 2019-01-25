@@ -1,0 +1,27 @@
+.close {
+    display: block;
+    cursor: pointer;
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    background-image: url(../../resources/images/icon_close.png);
+}
+
+.close:hover{
+    background-image: url(../../resources/images/icon_close_sel.png);
+}
+
+
+
+.dialog-menu{
+    border:1px solid #2789A0;
+    height: 48%;
+    width: 44%;
+    background: rgba(10,31,69,0.50);
+    border-radius: 3px;
+    top: calc(26%);
+    left: calc(28%);
+    position: absolute;
+}

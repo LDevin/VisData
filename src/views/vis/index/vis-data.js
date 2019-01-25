@@ -7,6 +7,7 @@ import MapContainer from './map/index';
 import LoadingIcon from '../../../public/tools/loading';
 import ErrorMsgTips from '../../../public/tools/msg-tips';
 import PageContainer from './page/page-container';
+import DialogMenu from '../../../public/tools/dialog';
 
 import Store from 'store';
 import {chgMenu} from 'models';
@@ -35,7 +36,7 @@ class App extends React.Component {
     }
 
     render() {
-        const {errMsg, errMsgShow, loading} = this.props.base;
+        const {errMsg, errMsgShow, loading, dialogShow} = this.props.base;
 
         return(
             <div>
@@ -43,6 +44,7 @@ class App extends React.Component {
                 {loading && <LoadingIcon />}
                 <MapContainer />
                 <PageContainer />
+                {dialogShow && <DialogMenu />}
             </div>
         )
     }

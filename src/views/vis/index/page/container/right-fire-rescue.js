@@ -43,25 +43,27 @@ export default class FireRescue extends React.Component {
     initChart() {
         if(this.statChart_Chart_1 == null) {
             this.statChart_Chart_1 = echarts.init(document.getElementById('statChart_Chart_1'));
+            let self = this;
             this.statChart_Chart_1.on('click',(param)=>{
-                console.log(param);
-                let getName  =  param.data.name;
-                let type =2;
-                switch(getName){
-                    case '一般单位':
-                    type = 2;
-                    break;
-                    case '三小单位':
-                    type = 3;
-                    break;
-                    case '高危单位':
-                    type = 4;
-                    break;
-                    case '重点单位':
-                    type = 5;
-                    break;
-                }
+                //console.log(param);
+               // let getName  =  param.data.name;
+                //let type =param.data.type;
+                // switch(getName){
+                //     case '一般单位':
+                //     type = 2;
+                //     break;
+                //     case '三小单位':
+                //     type = 3;
+                //     break;
+                //     case '高危单位':
+                //     type = 4;
+                //     break;
+                //     case '重点单位':
+                //     type = 5;
+                //     break;
+                // }
                // window.model.getIndustryPoint(type);
+               self.props.onNetComsDetails(param.data.type)
             });
         }
 
@@ -82,7 +84,7 @@ export default class FireRescue extends React.Component {
         let seriesData = [];
         let legendName = [];
         netComs.data.forEach(item=>{
-            seriesData.push({name:item.name,value:item.count});
+            seriesData.push({name:item.name,value:item.count, type: item.type});
             legendName.push({name:item.name,textStyle:{color:"#ffffff"}});
         });
          let colorList =["#2F92FA","#00FE8F","#FEC401","#FF3C7C"];

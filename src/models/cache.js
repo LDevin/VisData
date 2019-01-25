@@ -27,6 +27,7 @@ const _Base = {
     loading:false,
     errMsg:'',
     errMsgShow:false,
+    dialogShow: false,
 };
 
 const _Com = {
@@ -41,7 +42,7 @@ const _Map = {
     grids:null,
     texts:null,
     icons:null,
-    characterSet:[],
+    characterSet:null,
     pointClouds:null,
     ZoneLngLatData: null,
     gridZoneWarnData:null,

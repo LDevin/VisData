@@ -69,18 +69,23 @@ export const fetchDangers = () => {
 }
 
 export const fetchStreetLabel = () => {
-    return _Get(_CONST.API.FETCH_STREETS, (dispatch, result) => {
-        _CONST.DEBUG ? console.log('FETCH_STREETS success'):''
-        let res = [];
+    return _Get(_CONST.API.FETCH_GRID_STREET, (dispatch, result) => {
+        _CONST.DEBUG ? console.log('FETCH_GRID_STREET success'):''
+        let res = [], character = '';
+
         if (Array.isArray(result)) {
             result.forEach( item => {
                 let cor = item.coordinates.split(':')
                 res.push({coordinates: [Number(cor[0]), Number(cor[1]),Number(cor[2])], name: item.name, id: item.id})
+                character += item.name;
             }) 
         }
         let action = bindActions.changeMap({type: _CONST.ACTION.CH_TEXTS, payload: res});
-        dispatch(action)
-        console.log('store ', Store.getState().map)
+        let action2 = bindActions.changeMap({type: _CONST.ACTION.CH_CHARACTER, payload: [...new Set(character)].join('')});
+
+        dispatch(action) 
+        dispatch(action2) 
+        //console.log('store ', Store.getState().map)
     })
 }
 
@@ -237,7 +242,6 @@ export const fetchDevResDetails = (type) => {
         dispatch(action)
         let action2 = bindActions.changeMap({type: _CONST.ACTION.CH_HEXS, payload: res2});
         dispatch(action2)
-
         chgMapLoading(false)
     })
 }
@@ -281,7 +285,36 @@ export const fetchDevAlarmDetails = (type, deviceType) => {
         if (Array.isArray(result)) {
             result.forEach( item => {
                 let cor = item.coordinates.split(':')
-                res.push({icon: 'monitor', type: _CONST.ICON_TYPE.MONITOR,
+                res.push({icon: deviceType===1? 'monitor':'alarm', type: _CONST.ICON_TYPE.MONITOR, r: deviceType===1? 0x2f:0x33, 
+                g:deviceType===1? 0x92: 0xfd, b:deviceType===1? 0xfa : 0xff,
+                 coordinates: [Number(cor[0]), Number(cor[1]), Number(cor[2])]})
+            }) 
+        }
+        let action = bindActions.changeMap({type: _CONST.ACTION.CH_ICONS, payload: res});
+        dispatch(action)
+        chgMapLoading(false)
+    })
+}
+
+/**
+ * @brief  经纬度
+ * @param type: '一般单位'2,'三小单位'3,'高危单位'4,'重点单位'5
+ **/
+export const fetchNetComsDetails = (type) => {
+    chgMapLoading(true);
+    clearMapCache();
+    
+    return _Get(_CONST.API.FETCH_NET_COMS_DETAILS, (dispatch, result) => {
+        _CONST.DEBUG ? console.log('FETCH_NET_COMS_DETAILS success'):''
+        let res = [];
+        let r = type === 2? 0x2f : (type === 3?0xfe:(type===4?0x00:0xFF))
+        let g = type === 2? 0x92 : (type === 3?0xc4:(type===4?0xfe:0x3c))
+        let b = type === 2? 0xfa : (type === 3?0x01:(type===4?0x8f:0x7c))
+
+        if (Array.isArray(result)) {
+            result.forEach( item => {
+                let cor = item.coordinates.split(':')
+                res.push({icon: 'normal', type: _CONST.ICON_TYPE.NORMAL, r:r, g:g, b:b,
                  coordinates: [Number(cor[0]), Number(cor[1]), Number(cor[2])]})
             }) 
         }
@@ -301,7 +334,9 @@ export const chgMenu = (menuNum) => {
             const fetchDevAlarm = fetchDevAlarmStatus(state.com.systemType)
             const fetchNetCom = fetchNetComs()
             const fetchDevNet = fetchDevNets();
+            const fetchStreet = fetchStreetLabel();
 
+            Store.dispatch(fetchStreet)
             Store.dispatch(fetchDevRes)
             Store.dispatch(fetchDevRun)
             Store.dispatch(fetchDevAlarm)
@@ -324,10 +359,9 @@ const clearMapCache = () => {
     let map = {
         hexs:null,
         grids:null,
-        texts:null,
         icons:null,
         pointClouds:null
     };
-    let action = bindActions.changeBase({type: 'CH_MAP', payload: map})
+    let action = bindActions.changeMap({type: 'CH_MAP', payload: map})
     Store.dispatch(action)
 }

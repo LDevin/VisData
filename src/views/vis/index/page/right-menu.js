@@ -6,6 +6,7 @@ import Store from 'store';
 import {RiskUnitChunk, ProtectAreaChunk, FireProbabilityChunk} from './container/left-warning';
 
 import FireRescue from './container/right-fire-rescue'; 
+import {fetchNetComsDetails} from 'models';
 
 const mapStateToProps = state => {
     return {
@@ -22,6 +23,9 @@ const mapDispathToProps = dispatch => {
     return {
         onClick: (index) => {
         },
+        onNetComsDetails: (type) => {
+            dispatch(fetchNetComsDetails(type))
+        }
     }
 }
 
@@ -35,7 +39,8 @@ class App extends React.Component {
             case 0:{
                 const {netComs, devNets} = this.props;
                 html = <div className='right-menu' style={style}>
-                    <FireRescue netComs={netComs} devNets={devNets} com={com}/>
+                    <FireRescue netComs={netComs} devNets={devNets} com={com}
+                    onNetComsDetails={this.props.onNetComsDetails}/>
                 </div>
             }
             break;

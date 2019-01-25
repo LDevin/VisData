@@ -9,6 +9,52 @@ const lngmax = [108.364778536224245, 108.39577311256982, 108.4149736258242, 108.
 
 const latmin = [22.747372244925597,22.749472246592597,22.81792224635597,22.739537624492697]
 const latmax = [22.827572234925597,22.88692965789286,22.85694962789286,22.84792992889286]
+const textArr = ["中山街道","新竹街道","新阳街道","心杅街道","翠湖街道","江南街道","沙井街道","西乡塘街道","江北街道",
+"明秀街道","良凤街道","良庆街道","横岭街道","那洪街道","新江街道"];
+const textCor = [[108.34898114204407,22.79286870367229], [108.34184646606445,22.819542217480794],
+[
+  108.30845832824706,
+  22.818751087183244
+],[
+  108.26923370361328,
+  22.86502447526246
+],[
+  108.2651138305664,
+  22.802927516201063
+],[
+  108.2936954498291,
+  22.782274992634736
+],[
+  108.27069282531738,
+  22.782749798416805
+],[
+  108.28125,
+  22.825396438821492
+],[
+  108.31369400024413,
+  22.799920829957472
+],[
+  108.3145523071289,
+  22.857036519062568
+],[
+  108.31609725952148,
+  22.765101739713344
+],[
+  108.3969497680664,
+  22.841850199020886
+],[
+  108.21361541748047,
+  22.77887216950448
+],[
+  108.27532768249512,
+  22.74927194371657
+],[
+  108.22610378265381,
+  22.83255565109441
+]
+]
+
+let text_index = 0,text_index2 = 0;
 
 module.exports = [
     {
@@ -320,6 +366,52 @@ module.exports = [
               let random = Math.random()
               let random2 = Math.random()
               return (lng.min + lng_offset*random) + ":" + (lat.min + lat_offset*random2) + ':250'
+            },
+          }
+        ]
+      }
+    },
+    {
+      path: '/api/v1/grid/street',
+      method: 'get',
+      delay: 10,
+      status: 200,
+      data: {
+        code: 200,
+        msg: '获取数据成功',
+        'data|15': [
+          {
+            coordinates: function() {
+              if (text_index >= textCor.length)
+                  text_index = 0;
+                  let cor = textCor[text_index][0]+ ":" +textCor[text_index][1] + ':600';
+                  text_index++;
+                  return cor
+            },
+            name: function() {
+              if (text_index2 >= textArr.length)
+                text_index2 = 0;
+                return textArr[text_index2++]
+            },
+            id: text_index2
+          }
+        ]
+      }
+    },
+    {
+      path: '/api/v1/netcoms/details',
+      method: 'get',
+      delay: 10,
+      status: 200,
+      data: {
+        code: 200,
+        msg: '获取数据成功',
+        'data|5250-9015': [
+          {
+            coordinates: function() {
+              let random = Math.random()
+              let random2 = Math.random()
+              return (lng.min + lng_offset*random) + ":" + (lat.min + lat_offset*random2) + ':300'
             }
           }
         ]
